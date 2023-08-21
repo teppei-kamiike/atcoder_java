@@ -1,3 +1,5 @@
+package atcoder_java;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -20,40 +22,21 @@ public class Main {
      */
     public static List<Long> factorize(long num) {
         List<Long> results = new ArrayList<>();
+        double root = Math.sqrt(num);
         long tmp = num;
-        long primeFactorCurrentMax = 2;
 
-        // 素数でない場合（まだ割り切れる）に実行
-        while (!isPrimeNumber(tmp)) {
-            for (long i = primeFactorCurrentMax; i <= num; i++) {
-                if (2 != i && (i % 2) == 0)
-                    continue; // 2以外の偶数はスキップ
-                if (tmp % i == 0) {
-                    results.add(i);
-                    tmp = tmp / i;
-                    primeFactorCurrentMax = i;
-                    break;
-                }
+        for (long i = 2; i <= root; i++) {
+            while (tmp % i == 0) {
+                results.add(i);
+                tmp = tmp / i;
             }
         }
-        // 最後の素因数
-        results.add(tmp);
 
-        return results;
-    }
-
-    /**
-     * 素数判定
-     */
-    private static boolean isPrimeNumber(long num) {
-        double rootFraction = Math.sqrt(num);
-        long root = (long) Math.floor(rootFraction);
-        for (int i = 2; i <= root; i++) {
-            if (num % i == 0)
-                return false;
+        if (tmp >= 2) {
+            results.add(tmp);
         }
 
-        return true;
+        return results;
     }
 
 }
